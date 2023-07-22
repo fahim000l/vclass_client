@@ -2,6 +2,7 @@ import React from "react";
 import OutlineButton from "../../../tools/buttons/OutlineButton";
 import IconCoverButton from "../../../tools/buttons/IconCoverButton";
 import MenuIcon from "../../../tools/icons/MenuIcon";
+import { Link } from "react-router-dom";
 
 const Header = ({ navItems }) => {
   return (
@@ -19,7 +20,9 @@ const Header = ({ navItems }) => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <OutlineButton>Get Started</OutlineButton>
+        <Link to={"/signup"}>
+          <OutlineButton>Get Started</OutlineButton>
+        </Link>
       </div>
     </div>
   );
