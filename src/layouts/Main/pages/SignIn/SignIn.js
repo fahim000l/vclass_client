@@ -1,14 +1,72 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TextField from "../../../../tools/inputs/TextField";
 import Button from "../../../../tools/buttons/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authBanner from "../../../../assets/auth/authBanner.png";
 import googleIcon from "../../../../assets/auth/googleIcon.png";
 import facebookIcon from "../../../../assets/auth/facebookIcon.png";
 import IconOutlineButton from "../../../../tools/buttons/IconOutlineButton";
 import IconButton from "../../../../tools/buttons/IconButton";
+import { AuthContext } from "../../../../contexts/AuthProvider";
+import useSendUserToDb from "../../../../hooks/useSendUserToDb";
 
 const SignIn = () => {
+  const { signInWithGoogle, logIn } = useContext(AuthContext);
+  const [recordingUserInfo, setRecordingUserInfo] = useState(null);
+  const { dbConfirmation } = useSendUserToDb(recordingUserInfo);
+  const navigator = useNavigate();
+
+  useEffect(() => {
+    if (dbConfirmation) {
+      console.log(dbConfirmation);
+      if (dbConfirmation?.acknowledged) {
+        navigator("/dashboard");
+      } else if (dbConfirmation?.message) {
+        navigator("/dashboard");
+      }
+    }
+  }, [dbConfirmation, navigator]);
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((data) => {
+        const user = data.user;
+        console.log(user);
+        setRecordingUserInfo({
+          email: user?.email,
+          userName: user?.displayName,
+          profilePic: user?.photoURL,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const loginInfo = {
+      email,
+      password,
+    };
+
+    logIn(email, password)
+      .then((data) => {
+        const user = data.user;
+        console.log(user);
+        navigator("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="hero min-h-screen w-full">
       <div className="hero-content flex-col lg:flex-row-reverse w-full">
@@ -18,7 +76,10 @@ const SignIn = () => {
         <div className="card shadow-2xl bg-base-100 lg:w-[50%]">
           <div className="flex flex-col lg:flex-row items-center lg:items-start">
             <div className="px-5 lg:pt-16">
-              <IconButton className={"my-5 w-[250px]"}>
+              <IconButton
+                onClick={handleGoogleSignIn}
+                className={"my-5 w-[250px]"}
+              >
                 <img className="w-6 h-6" src={googleIcon} alt="" />
                 Sign In with Google
               </IconButton>
@@ -27,7 +88,7 @@ const SignIn = () => {
                 Sign In with Facebook
               </IconOutlineButton>
             </div>
-            <form action="">
+            <form onSubmit={handleSubmit}>
               <div className="card-body w-full">
                 <div className="form-control">
                   <label className="label">

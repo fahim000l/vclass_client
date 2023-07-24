@@ -1,14 +1,15 @@
 import React from "react";
 
-const IconCoverButton = ({ className, children, onClick }) => {
+const IconCoverLabel = ({ className, children, onClick, htmlFor }) => {
   return (
-    <button
+    <label
+      htmlFor={htmlFor}
       onClick={onClick}
       className={`bg-[steelblue] text-white font-bold p-2 rounded-full cursor-pointer ${className}`}
     >
       {children}
-    </button>
+    </label>
   );
 };
 
-export default IconCoverButton;
+export default IconCoverLabel;

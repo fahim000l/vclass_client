@@ -1,8 +1,19 @@
 import React from "react";
 
-const TextField = ({ type, placeholder, className, value, required, name }) => {
+const TextField = ({
+  type,
+  placeholder,
+  className,
+  value,
+  required,
+  name,
+  onChange,
+  onKeyDown,
+}) => {
   return (
     <input
+      onChange={onChange}
+      onKeyDown={onKeyDown}
       type={type}
       placeholder={placeholder}
       value={value}
