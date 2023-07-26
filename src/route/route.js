@@ -11,6 +11,12 @@ import Peoples from "../layouts/Dashboard/pages/Peoples/Peoples";
 import FriendRequests from "../layouts/Dashboard/pages/FriendRequests/FriendRequests";
 import Vchat from "../layouts/Vchat/Vchat";
 import ChatRooms from "../layouts/Vchat/pages/ChatRooms/ChatRooms";
+import CreateClass from "../layouts/Dashboard/pages/CreateClass/CreateClass";
+import MyClasses from "../layouts/Dashboard/pages/MyClasses/MyClasses";
+import ClassDetails from "../layouts/Dashboard/pages/ClassDetails/ClassDetails";
+import Stream from "../layouts/Dashboard/pages/ClassDetails/sections/Stream/Stream";
+import Assignments from "../layouts/Dashboard/pages/ClassDetails/sections/Assignments/Assignments";
+import Members from "../layouts/Dashboard/pages/ClassDetails/sections/Members/Members";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +76,36 @@ const router = createBrowserRouter([
             <FriendRequests></FriendRequests>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/dashboard/create-class",
+        element: (
+          <PrivateRoute>
+            <CreateClass></CreateClass>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/my-classes",
+        element: <MyClasses></MyClasses>,
+      },
+      {
+        path: "/dashboard/class-details/:id",
+        element: <ClassDetails></ClassDetails>,
+        children: [
+          {
+            path: "/dashboard/class-details/:id/stream",
+            element: <Stream></Stream>,
+          },
+          {
+            path: "/dashboard/class-details/:id/assignments",
+            element: <Assignments></Assignments>,
+          },
+          {
+            path: "/dashboard/class-details/:id/members",
+            element: <Members></Members>,
+          },
+        ],
       },
     ],
   },

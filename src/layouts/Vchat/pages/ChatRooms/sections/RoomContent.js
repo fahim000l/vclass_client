@@ -7,7 +7,7 @@ import useGetMessages from "../../../../../hooks/useGetMessages";
 import ScrollToBottom from "react-scroll-to-bottom";
 import useGetRooms from "../../../../../hooks/useGetRooms";
 
-const RoomContent = ({ sendMessageTodb, room, roomRefetch }) => {
+const RoomContent = ({ sendMessageTodb, room, roomRefetch, fileContent }) => {
   const { socket } = useContext(SocketContext);
   const [receivedMsg, setReceivedMsg] = useState(null);
   const { authUser } = useContext(AuthContext);

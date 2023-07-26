@@ -9,6 +9,7 @@ import { SocketContext } from "../../../../contexts/SocketProvider";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import useGetRooms from "../../../../hooks/useGetRooms";
 import useGetMessages from "../../../../hooks/useGetMessages";
+import useUploadFile from "../../../../hooks/useUploadFile";
 
 const ChatRooms = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const ChatRooms = () => {
   const { socket } = useContext(SocketContext);
   const { authUser } = useContext(AuthContext);
   const [msgContent, setMsgContent] = useState("");
+  const [fileContent, setFileContent] = useState(null);
   const { roomsRefetch } = useGetRooms();
   const { messagesRefetch } = useGetMessages(id);
 
@@ -40,6 +42,23 @@ const ChatRooms = () => {
       socket.emit("send_message", messageInfo);
       sendMessageTodb(messageInfo);
       setMsgContent("");
+    } else if (fileContent) {
+      const fileInfo = {
+        author: authUser?.email,
+        date: `${new Date().getDate()}-${
+          new Date().getMonth() + 1
+        }-${new Date().getFullYear()}`,
+        time:
+          new Date(Date()).getMinutes() + ":" + new Date(Date()).getSeconds(),
+        fileName: fileContent?.name,
+        fileLink: fileContent?.link,
+        fileIcon: fileContent?.icon,
+        room: id,
+      };
+
+      socket.emit("send_message", fileInfo);
+      sendMessageTodb(fileInfo);
+      setFileContent(null);
     }
   };
 
@@ -74,11 +93,14 @@ const ChatRooms = () => {
           room={id}
           sendMessageTodb={sendMessageTodb}
           roomRefetch={roomRefetch}
+          fileContent={fileContent}
         />
         <RoomFooter
           msgContent={msgContent}
           handleSendMsg={handleSendMsg}
           setMsgContent={setMsgContent}
+          setFileContent={setFileContent}
+          fileContent={fileContent}
         />
       </div>
       <RoomComponents room={room} />
