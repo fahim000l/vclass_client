@@ -163,7 +163,7 @@ const PeoplesCard = ({ user }) => {
 
   return (
     <div
-      className={`card bg-base-100 h-32 w-80 lg:h-auto lg:flex-col flex-row shadow-2xl ${
+      className={`card bg-base-100 h-32 lg:h-auto lg:flex-col flex-row shadow-2xl ${
         email === authUser?.email ? "hidden" : ""
       }`}
     >

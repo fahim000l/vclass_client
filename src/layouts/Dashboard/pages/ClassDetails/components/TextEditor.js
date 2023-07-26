@@ -19,7 +19,7 @@ const MenuBar = ({ editor }) => {
     return null;
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  //   eslint-disable-next-line react-hooks/rules-of-hooks
   const setLink = useCallback(() => {
     const previousUrl = editor.getAttributes("link").href;
     const url = window.prompt("URL", previousUrl);
@@ -40,12 +40,14 @@ const MenuBar = ({ editor }) => {
   return (
     <div className="mr-4 mb-4 flex justify-end gap-2">
       <button
+        type="button"
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
       >
         <ImUndo2 />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().redo().run()}
         disabled={!editor.can().chain().focus().redo().run()}
       >
@@ -53,12 +55,14 @@ const MenuBar = ({ editor }) => {
       </button>
       <div className="icon-divide"></div>
       <button
+        type="button"
         onClick={() => editor.chain().focus().setParagraph().run()}
         className={editor.isActive("paragraph") ? "" : "opacity-50"}
       >
         <FaParagraph />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         className={editor.isActive("heading", { level: 2 }) ? "" : "opacity-50"}
       >
@@ -66,6 +70,7 @@ const MenuBar = ({ editor }) => {
       </button>
       <div className="icon-divide"></div>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
         className={editor.isActive("bold") ? "" : "opacity-50"}
@@ -73,6 +78,7 @@ const MenuBar = ({ editor }) => {
         <FaBold />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         className={editor.isActive("italic") ? "" : "opacity-50"}
@@ -80,6 +86,7 @@ const MenuBar = ({ editor }) => {
         <FaItalic />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleUnderline().run()}
         disabled={!editor.can().chain().focus().toggleUnderline().run()}
         className={editor.isActive("underline") ? "" : "opacity-50"}
@@ -87,13 +94,15 @@ const MenuBar = ({ editor }) => {
         <FaUnderline />
       </button>
       <button
+        type="button"
         onClick={setLink}
-        className={editor.isActive("link") ? "" : "opacity-50"}
+        // className={editor.isActive("link") ? "" : "opacity-50"}
       >
         <FaLink />
       </button>
       <div className="icon-divide"></div>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleCode().run()}
         disabled={!editor.can().chain().focus().toggleCode().run()}
         className={editor.isActive("code") ? "" : "opacity-50"}
@@ -101,6 +110,7 @@ const MenuBar = ({ editor }) => {
         <FaCode />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         className={editor.isActive("codeBlock") ? "" : "opacity-50"}
       >
