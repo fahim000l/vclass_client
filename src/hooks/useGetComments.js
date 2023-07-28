@@ -5,7 +5,7 @@ const useGetComments = (postId) => {
     refetch: commentsRefetch,
     isLoading: commentsLoading,
   } = useQuery({
-    queryKey: [],
+    queryKey: ["get-comments", postId],
     queryFn: () =>
       fetch(
         `${process.env.REACT_APP_serverSiteLink}get-comments?postId=${postId}`

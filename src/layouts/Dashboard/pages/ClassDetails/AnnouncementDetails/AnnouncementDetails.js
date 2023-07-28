@@ -12,6 +12,7 @@ import IconOutlineCoverButton from "../../../../../tools/buttons/IconOutlineCove
 import { toast } from "react-toastify";
 import useGetComments from "../../../../../hooks/useGetComments";
 import CommentCard from "../components/CommentCard";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const AnnouncementDetails = () => {
   const { id, announcementId } = useParams();
@@ -88,12 +89,12 @@ const AnnouncementDetails = () => {
         </div>
       </div>
       <hr className="my-2 border border-black border-solid mt-5" />
-      <div className={`flex flex-col justify-between w-full overflow-y-hidden`}>
-        <div>
+      <div className={`flex flex-col justify-between w-full`}>
+        <ScrollToBottom className="h-[40vh]">
           {comments?.map((comment) => (
             <CommentCard comment={comment} key={comment?._id} />
           ))}
-        </div>
+        </ScrollToBottom>
         <div className="flex items-center justify-between px-4 py-3 border-t gap-3">
           <div className="avatar">
             <div className="w-10 rounded-full">

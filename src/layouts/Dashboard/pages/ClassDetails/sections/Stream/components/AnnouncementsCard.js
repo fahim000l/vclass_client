@@ -2,10 +2,13 @@ import React from "react";
 import useGetDBUser from "../../../../../../../hooks/useGetDBUser";
 import AttachIcon from "../../../../../../../tools/icons/AttachIcon";
 import { useNavigate } from "react-router-dom";
+import useGetComments from "../../../../../../../hooks/useGetComments";
 
 const AnnouncementsCard = ({ ansmnt, classId }) => {
   const { dbUser } = useGetDBUser(ansmnt?.author);
   const navigator = useNavigate();
+
+  const { comments } = useGetComments(ansmnt?._id);
 
   return (
     <div
@@ -37,7 +40,7 @@ const AnnouncementsCard = ({ ansmnt, classId }) => {
           <AttachIcon className={"w-4 h-4 mr-2"} />
           <p>{ansmnt?.attachments?.length} attachments</p>
         </div>
-        <p className="border-t-2 text-start p-2">0 comments</p>
+        <p className="border-t-2 text-start p-2">{comments?.length} comments</p>
       </div>
     </div>
   );

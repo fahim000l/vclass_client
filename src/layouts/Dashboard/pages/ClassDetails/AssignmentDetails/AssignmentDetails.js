@@ -20,6 +20,9 @@ import useGetClasses from "../../../../../hooks/useGetClasses";
 import { toast } from "react-toastify";
 import useGetSubByAs from "../../../../../hooks/useGetSubByAs";
 import SubmissionCard from "./components/SubmissionCard";
+import useGetComments from "../../../../../hooks/useGetComments";
+import CommentCard from "../components/CommentCard";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const AssignmentDetails = () => {
   const { assignmentId, id } = useParams();
@@ -27,12 +30,14 @@ const AssignmentDetails = () => {
   const [fileContent, setFileContent] = useState(null);
 
   const [selectedTab, setSelectedTab] = useState("i");
+  const [commentText, setCommentText] = useState("");
 
   const { asnment, assignemntRefetch } = useGetAssignment(assignmentId);
   const { cls, clsRefetch } = useGetClass(id);
   const { classesRefetch } = useGetClasses();
   const { dbUser } = useGetDBUser(cls?.classTeacher);
   const { asSubs, asSubsRefetch } = useGetSubByAs(assignmentId);
+  const { comments, commentsRefetch } = useGetComments(assignmentId);
 
   const handleChange = (files) => {
     console.log(files[0]);
@@ -73,6 +78,33 @@ const AssignmentDetails = () => {
     }
   };
 
+  const sendComment = () => {
+    const commentInfo = {
+      author: authUser?.email,
+      content: commentText,
+      postId: assignmentId,
+    };
+
+    console.log(commentInfo);
+
+    fetch(`${process.env.REACT_APP_serverSiteLink}post-comment`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(commentInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data?.acknowledged) {
+          setCommentText("");
+          commentsRefetch();
+          toast.success("yor comment has been added");
+        }
+      });
+  };
+
   return (
     <div>
       <div
@@ -95,10 +127,10 @@ const AssignmentDetails = () => {
       </div>
       {/* instructions */}
       {selectedTab === "i" ? (
-        <div className="lg:flex justify-evenly px-5 my-5">
+        <div className="lg:flex px-5 my-5">
           <div
             className={`${
-              dbUser?.email !== authUser?.email ? "lg:w-[40%]" : "lg:w-full"
+              dbUser?.email !== authUser?.email ? "lg:w-[50%]" : "lg:w-full"
             }`}
           >
             <div className="flex items-start">
@@ -122,23 +154,58 @@ const AssignmentDetails = () => {
               dangerouslySetInnerHTML={{ __html: asnment?.details }}
               className="text-start"
             ></div>
-            <hr className="my-2 border border-black border-solid" />
-            <div className="flex items-center justify-between px-4 py-3 border-t gap-3">
-              <div className="avatar">
-                <div className="w-10 rounded-full">
-                  <img src={authUser?.photoURL} alt="" />
+            <div className="grid grid-cols-2 gap-5">
+              {asnment?.attachments?.map((file, i) => (
+                <div
+                  key={i}
+                  className="btn btn-primary flex justify-between my-1"
+                >
+                  <a
+                    className="flex justify-between items-center"
+                    href={file?.link}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <img className="w-10 h-10" src={file?.icon} alt="" />
+                    {file?.name}
+                  </a>
                 </div>
-              </div>
-              <TextField placeholder={"Aa"} className={"w-full input-sm"} />
-              <div className="flex">
-                <button>
-                  <SendIcon className={"cursor-pointer w-6 h-6 mx-2"} />
-                </button>
+              ))}
+            </div>
+            <hr className="my-2 border border-black border-solid" />
+            <div className={`flex flex-col justify-between w-full`}>
+              <ScrollToBottom className="h-[40vh]">
+                {comments?.map((comment) => (
+                  <CommentCard comment={comment} key={comment?._id} />
+                ))}
+              </ScrollToBottom>
+              <div className="flex items-center justify-between px-4 py-3 border-t gap-3">
+                <div className="avatar">
+                  <div className="w-10 rounded-full">
+                    <img src={authUser?.photoURL} alt="" />
+                  </div>
+                </div>
+                <TextField
+                  onChange={(event) => setCommentText(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      sendComment();
+                    }
+                  }}
+                  value={commentText}
+                  placeholder={"Aa"}
+                  className={"w-full input-sm"}
+                />
+                <div className="flex">
+                  <button onClick={sendComment}>
+                    <SendIcon className={"cursor-pointer w-6 h-6 mx-2"} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           {dbUser?.email !== authUser?.email && (
-            <div className="lg:w-[40%] rounded-lg shadow-xl p-5">
+            <div className="lg:w-[40%] mx-auto rounded-lg shadow-xl p-5 h-auto">
               <div className="flex items-center justify-between">
                 <p className="text-xl">Your Work</p>
                 {asSubs?.find((sub) => sub?.submittedBy === authUser?.email) ? (
