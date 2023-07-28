@@ -23,6 +23,7 @@ import ThreeDotIcon from "../../../../../../tools/icons/ThreeDotIcon";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { AuthContext } from "../../../../../../contexts/AuthProvider";
+import AssignmentCard from "../Stream/components/AssignmentCard";
 
 const Assignments = () => {
   const { id } = useParams();
@@ -243,45 +244,12 @@ const Assignments = () => {
       </div>
       <div className="mt-5 lg:px-20">
         {assignments?.map((assignment) => (
-          <div
+          <AssignmentCard
             key={assignment?._id}
-            className="p-2 flex justify-between items-center my-2 shadow-lg cursor-pointer"
-          >
-            <div
-              onClick={() =>
-                navigator(
-                  `/dashboard/class-details/${id}/assignments/${assignment?._id}`
-                )
-              }
-              className="flex items-center w-full"
-            >
-              <IconCoverButton>
-                <DocumentIcon className={"w-6 h-6"} />
-              </IconCoverButton>
-              <div className="ml-2 flex flex-col justify-start">
-                <h3 className="card-title">{assignment?.title}</h3>
-                <p>deadline: {assignment?.deadline}</p>
-              </div>
-            </div>
-            <div className="dropdown dropdown-end">
-              <label tabIndex={0}>
-                <ThreeDotIcon className={"w-6 h-6"} />
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content bg-blue-200 z-[1] menu p-2 shadow rounded-box w-52"
-              >
-                <li>
-                  <button onClick={() => handleDeletConfirm(assignment)}>
-                    Delete
-                  </button>
-                </li>
-                <li>
-                  <button>Edit</button>
-                </li>
-              </ul>
-            </div>
-          </div>
+            classId={id}
+            assignment={assignment}
+            handleDeletConfirm={handleDeletConfirm}
+          />
         ))}
       </div>
     </div>
