@@ -30,7 +30,7 @@ const Assignments = () => {
   const [attachments, setAttachments] = useState([]);
   const [points, setPoints] = useState(0);
   const navigator = useNavigate();
-  const { authUser } = useContext(AuthContext)
+  const { authUser } = useContext(AuthContext);
 
   const { assignments, assignmentsRefetch } = useGetAssignmentsByClass(id);
 
@@ -65,8 +65,9 @@ const Assignments = () => {
     if (editor.getHTML() !== "<p></p>" || attachments?.length > 0) {
       const assignmentInfo = {
         classId: id,
-        date: `${new Date().getFullYear()}-${new Date().getMonth() + 1
-          }-${new Date().getDate()}`,
+        date: `${new Date().getFullYear()}-${
+          new Date().getMonth() + 1
+        }-${new Date().getDate()}`,
         deadline,
         title,
         totalPoints: points,
@@ -88,8 +89,9 @@ const Assignments = () => {
             editor.commands.clearContent();
             form.reset();
             setAttachments([]);
-            toast.success("Assignment added successfully");
             assignmentsRefetch();
+            setIsEditing(false);
+            toast.success("Assignment added successfully");
           }
         });
     }
@@ -134,13 +136,17 @@ const Assignments = () => {
 
   return (
     <div className="lg:px-10 px-2 py-2 pb-5">
-      <div className={`${authUser?.email !== dbUser?.email ? 'hidden' : ''}`}>
+      <div className={`${authUser?.email !== dbUser?.email ? "hidden" : ""}`}>
         {isEditing ? (
-          <form onSubmit={handlePost} className="shadow-lg p-5">
+          <form
+            id="assignmentForm"
+            onSubmit={handlePost}
+            className="shadow-lg p-5 lg:h-auto h-[90vh]"
+          >
             <div>
-              <label htmlFor="" className="text-start font-bold mr-auto">
+              {/* <label htmlFor="" className="text-start font-bold mr-auto">
                 Adjust points
-              </label>
+              </label> */}
               <div className="flex items-center my-2">
                 <span className="badge badge-primary">0</span>
                 <input
@@ -221,7 +227,8 @@ const Assignments = () => {
             </div>
           </form>
         ) : (
-          <div
+          <a
+            href="#assignmentForm"
             onClick={() => setIsEditing(true)}
             className="btn btn-ghost w-full flex justify-start shadow-lg normal-case"
           >
@@ -231,7 +238,7 @@ const Assignments = () => {
               </div>
             </div>
             Make Assignment
-          </div>
+          </a>
         )}
       </div>
       <div className="mt-5 lg:px-20">

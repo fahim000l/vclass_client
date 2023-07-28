@@ -18,6 +18,7 @@ import Stream from "../layouts/Dashboard/pages/ClassDetails/sections/Stream/Stre
 import Assignments from "../layouts/Dashboard/pages/ClassDetails/sections/Assignments/Assignments";
 import Members from "../layouts/Dashboard/pages/ClassDetails/sections/Members/Members";
 import AssignmentDetails from "../layouts/Dashboard/pages/ClassDetails/AssignmentDetails/AssignmentDetails";
+import AnnouncementDetails from "../layouts/Dashboard/pages/ClassDetails/AnnouncementDetails/AnnouncementDetails";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/class-details/:id/assignments/:assignmentId",
             element: <AssignmentDetails></AssignmentDetails>,
+          },
+          {
+            path: "/dashboard/class-details/:id/announcements/:announcementId",
+            element: <AnnouncementDetails></AnnouncementDetails>,
           },
         ],
       },

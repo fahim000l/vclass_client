@@ -72,6 +72,7 @@ const AddMemberModal = ({ clsId }) => {
                 membersRefetch()
                 clsRefetch()
                 classesRefetch()
+                setSelectedUsers([])
                 modalToggleRef.current.click()
                 toast.success('Students added successfully')
             }
