@@ -11,17 +11,27 @@ import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { toast } from "react-toastify";
 import useGetAssignment from "../../../../../hooks/useGetAssignment";
 import BasicButton from "../../../../../tools/buttons/BasicButton";
+import useGetSubByAs from "../../../../../hooks/useGetSubByAs";
+import useGetRemarkedPaper from "../../../../../hooks/useGetRemarkedPaper";
+import useGetClass from "../../../../../hooks/useGetClass";
 
 const SubmissionDetails = () => {
   const { id, assignmentId, subId } = useParams();
 
-  const { subInfo } = useGetSubmissionInfo(subId);
+  const { subInfo, subInfoRefetch } = useGetSubmissionInfo(subId);
   const { authUser } = useContext(AuthContext);
   const { asnment } = useGetAssignment(assignmentId);
+  const [remarkField, setRemarkField] = useState("");
+  const { cls } = useGetClass(id);
 
   const { dbUser } = useGetDBUser(subInfo?.submittedBy);
   const { comments, commentsRefetch } = useGetComments(subId);
   const [commentText, setCommentText] = useState("");
+  const { asSubsRefetch } = useGetSubByAs(assignmentId);
+  const { remarkedPaperRefetch } = useGetRemarkedPaper(
+    assignmentId,
+    dbUser?.email
+  );
 
   const sendComment = () => {
     const commentInfo = {
@@ -50,6 +60,34 @@ const SubmissionDetails = () => {
       });
   };
 
+  const handleReturn = () => {
+    if (remarkField) {
+      const submissionInfo = {
+        subId,
+        remark: remarkField,
+      };
+
+      fetch(`${process.env.REACT_APP_serverSiteLink}remark-submission`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(submissionInfo),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data?.modifiedCount > 0) {
+            setRemarkField("");
+            asSubsRefetch();
+            subInfoRefetch();
+            remarkedPaperRefetch();
+            toast.success("remarked successfully");
+          }
+        });
+    }
+  };
+
   return (
     <div className="lg:px-5 px-2 my-5">
       <div className="flex items-start justify-between">
@@ -69,14 +107,34 @@ const SubmissionDetails = () => {
             </p>
           </div>
         </div>
-        <div className="flex items-end">
-          <div className="flex flex-col justify-start">
-            <label htmlFor="" className="text-start">
-              Remark
-            </label>
-            <TextField placeholder={` /${asnment?.totalPoints}`} />
-          </div>
-          <BasicButton className={"ml-2"}>Return</BasicButton>
+        <div>
+          {authUser?.email === cls?.classTeacher ? (
+            <div className="flex items-end">
+              <div className="flex flex-col justify-start">
+                <label htmlFor="" className="text-start">
+                  Remark
+                </label>
+                <TextField
+                  onChange={(event) => setRemarkField(event.target.value)}
+                  value={remarkField}
+                  placeholder={`${subInfo?.remark || ""}/${
+                    asnment?.totalPoints
+                  }`}
+                />
+              </div>
+              <BasicButton
+                disabled={!remarkField}
+                onClick={handleReturn}
+                className={"ml-2"}
+              >
+                Return
+              </BasicButton>
+            </div>
+          ) : (
+            <span className="badge badge-lg badge-neutral">
+              Remark : {subInfo?.remark}
+            </span>
+          )}
         </div>
       </div>
       <hr className="my-2 border border-black border-solid mt-5" />

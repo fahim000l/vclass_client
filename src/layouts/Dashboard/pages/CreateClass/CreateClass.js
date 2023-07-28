@@ -4,10 +4,13 @@ import TextArea from "../../../../tools/inputs/TextArea";
 import BasicButton from "../../../../tools/buttons/BasicButton";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import useGetClasses from "../../../../hooks/useGetClasses";
+import useGetRooms from "../../../../hooks/useGetRooms";
+import { toast } from "react-toastify";
 
 const CreateClass = () => {
   const { authUser } = useContext(AuthContext);
   const { classesRefetch } = useGetClasses();
+  const { roomsRefetch } = useGetRooms();
 
   const handleCreateClass = (event) => {
     event.preventDefault();
@@ -38,8 +41,31 @@ const CreateClass = () => {
       .then((data) => {
         console.log(data);
         if (data?.acknowledged) {
-          form.reset();
-          classesRefetch();
+          const roomInfo = {
+            roomName: className,
+            roomPhoto: "https://i.ibb.co/CsQFGnv/groupImg.png",
+            roomType: "class",
+            members: members,
+            classId: data?.insertedId,
+          };
+
+          fetch(`${process.env.REACT_APP_serverSiteLink}make-room`, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(roomInfo),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data?.acknowledged) {
+                form.reset();
+                classesRefetch();
+                roomsRefetch();
+                console.log(data);
+                toast.success("class created successfully");
+              }
+            });
         }
       });
   };

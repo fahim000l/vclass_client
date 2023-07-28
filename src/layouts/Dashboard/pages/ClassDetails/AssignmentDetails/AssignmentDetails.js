@@ -23,6 +23,7 @@ import SubmissionCard from "./components/SubmissionCard";
 import useGetComments from "../../../../../hooks/useGetComments";
 import CommentCard from "../components/CommentCard";
 import ScrollToBottom from "react-scroll-to-bottom";
+import useGetRemarkedPaper from "../../../../../hooks/useGetRemarkedPaper";
 
 const AssignmentDetails = () => {
   const { assignmentId, id } = useParams();
@@ -38,6 +39,8 @@ const AssignmentDetails = () => {
   const { dbUser } = useGetDBUser(cls?.classTeacher);
   const { asSubs, asSubsRefetch } = useGetSubByAs(assignmentId);
   const { comments, commentsRefetch } = useGetComments(assignmentId);
+
+  const { remarkedPaper } = useGetRemarkedPaper(assignmentId, authUser?.email);
 
   const handleChange = (files) => {
     console.log(files[0]);
@@ -260,6 +263,14 @@ const AssignmentDetails = () => {
                   </DropboxChooser>
                 )}
               </div>
+              {/* nceinceicn={dinwidwndiw}n */}
+              {remarkedPaper && (
+                <SubmissionCard
+                  sub={remarkedPaper}
+                  assignmentId={assignmentId}
+                  id={id}
+                />
+              )}
             </div>
           )}
         </div>
