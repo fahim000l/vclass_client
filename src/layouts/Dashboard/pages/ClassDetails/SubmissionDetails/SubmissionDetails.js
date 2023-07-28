@@ -9,12 +9,15 @@ import TextField from "../../../../../tools/inputs/TextField";
 import SendIcon from "../../../../../tools/icons/SendIcon";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { toast } from "react-toastify";
+import useGetAssignment from "../../../../../hooks/useGetAssignment";
+import BasicButton from "../../../../../tools/buttons/BasicButton";
 
 const SubmissionDetails = () => {
   const { id, assignmentId, subId } = useParams();
 
   const { subInfo } = useGetSubmissionInfo(subId);
   const { authUser } = useContext(AuthContext);
+  const { asnment } = useGetAssignment(assignmentId);
 
   const { dbUser } = useGetDBUser(subInfo?.submittedBy);
   const { comments, commentsRefetch } = useGetComments(subId);
@@ -49,17 +52,31 @@ const SubmissionDetails = () => {
 
   return (
     <div className="lg:px-5 px-2 my-5">
-      <div className="flex items-start">
-        <div className="avatar">
-          <div className="lg:w-16 w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-            <img src={dbUser?.profilePic} alt="" />
+      <div className="flex items-start justify-between">
+        <div className="flex items-start">
+          <div className="avatar">
+            <div className="lg:w-16 w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src={dbUser?.profilePic} alt="" />
+            </div>
+          </div>
+          <div className="mx-2">
+            <h3 className="lg:text-2xl text-xl font-bold text-start">
+              {dbUser?.userName}
+            </h3>
+            <p className="text-start flex flex-col">
+              <span> {subInfo?.date}</span>
+              <span>total points {asnment?.totalPoints}</span>
+            </p>
           </div>
         </div>
-        <div className="mx-2">
-          <h3 className="lg:text-2xl text-xl font-bold">{dbUser?.userName}</h3>
-          <p className="text-start">
-            <span> {subInfo?.date}</span>
-          </p>
+        <div className="flex items-end">
+          <div className="flex flex-col justify-start">
+            <label htmlFor="" className="text-start">
+              Remark
+            </label>
+            <TextField placeholder={` /${asnment?.totalPoints}`} />
+          </div>
+          <BasicButton className={"ml-2"}>Return</BasicButton>
         </div>
       </div>
       <hr className="my-2 border border-black border-solid mt-5" />
