@@ -19,6 +19,7 @@ import Assignments from "../layouts/Dashboard/pages/ClassDetails/sections/Assign
 import Members from "../layouts/Dashboard/pages/ClassDetails/sections/Members/Members";
 import AssignmentDetails from "../layouts/Dashboard/pages/ClassDetails/AssignmentDetails/AssignmentDetails";
 import AnnouncementDetails from "../layouts/Dashboard/pages/ClassDetails/AnnouncementDetails/AnnouncementDetails";
+import SubmissionDetails from "../layouts/Dashboard/pages/ClassDetails/SubmissionDetails/SubmissionDetails";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/class-details/:id/announcements/:announcementId",
             element: <AnnouncementDetails></AnnouncementDetails>,
+          },
+          {
+            path: "/dashboard/class-details/:id/assignments/:assignmentId/submission/:subId",
+            element: <SubmissionDetails></SubmissionDetails>,
           },
         ],
       },

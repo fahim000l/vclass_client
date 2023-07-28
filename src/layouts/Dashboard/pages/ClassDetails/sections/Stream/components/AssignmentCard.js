@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import IconCoverButton from "../../../../../../../tools/buttons/IconCoverButton";
 import DocumentIcon from "../../../../../../../tools/icons/DocumentIcon";
 import ThreeDotIcon from "../../../../../../../tools/icons/ThreeDotIcon";
@@ -10,10 +10,16 @@ import TrushIcon from "../../../../../../../tools/icons/TrushIcon";
 import useGetComments from "../../../../../../../hooks/useGetComments";
 import MessageIcon from "../../../../../../../tools/icons/MessageIcon";
 import AttachIcon from "../../../../../../../tools/icons/AttachIcon";
+import { AuthContext } from "../../../../../../../contexts/AuthProvider";
+import useGetClass from "../../../../../../../hooks/useGetClass";
+import useGetSubByAs from "../../../../../../../hooks/useGetSubByAs";
 
 const AssignmentCard = ({ assignment, classId, handleDeletConfirm }) => {
   const navigator = useNavigate();
   const { comments } = useGetComments(assignment?._id);
+  const { authUser } = useContext(AuthContext);
+  const { cls } = useGetClass(classId);
+  const { asSubs } = useGetSubByAs(assignment?._id);
 
   return (
     <div
@@ -45,12 +51,20 @@ const AssignmentCard = ({ assignment, classId, handleDeletConfirm }) => {
               {assignment?.attachments?.length}
               <AttachIcon className={"w-4 h-4 ml-2 mx-5"} />
             </div>
+            {authUser?.email === cls?.classTeacher && (
+              <div className="flex place-items-center">
+                {asSubs?.length}/{cls?.members?.length - 1}
+                <DocumentIcon className={"w-4 h-4 ml-2 mx-5"} />
+              </div>
+            )}
           </div>
         </div>
       </div>
-      <IconOutlineCoverButton onClick={() => handleDeletConfirm(assignment)}>
-        <TrushIcon className={"w-6 h-6"} />
-      </IconOutlineCoverButton>
+      {authUser?.email === cls?.classTeacher && (
+        <IconOutlineCoverButton onClick={() => handleDeletConfirm(assignment)}>
+          <TrushIcon className={"w-6 h-6"} />
+        </IconOutlineCoverButton>
+      )}
     </div>
   );
 };

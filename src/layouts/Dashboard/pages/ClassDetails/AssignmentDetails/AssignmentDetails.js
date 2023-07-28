@@ -266,7 +266,12 @@ const AssignmentDetails = () => {
       ) : (
         <div className="mt-5 lg:px-20">
           {asSubs?.map((sub) => (
-            <SubmissionCard sub={sub} key={sub?._id} />
+            <SubmissionCard
+              id={id}
+              assignmentId={assignmentId}
+              sub={sub}
+              key={sub?._id}
+            />
           ))}
         </div>
       )}

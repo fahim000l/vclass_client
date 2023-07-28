@@ -47,7 +47,7 @@ const CreateClass = () => {
   return (
     <form
       onSubmit={handleCreateClass}
-      className="card-body w-full border-2 border-solid border-gray-200 rounded-lg my-5"
+      className="card-body lg:w-[80%] w-[90%] border-2 border-solid border-gray-200 rounded-lg my-5 mx-auto"
     >
       <div className="form-control">
         <label className="label">
