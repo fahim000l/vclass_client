@@ -43,7 +43,7 @@ const RoomContent = ({ sendMessageTodb, room, roomRefetch, fileContent }) => {
   }, [socket]);
 
   return (
-    <ScrollToBottom className="h-[80vh] overflow-y-scroll w-full">
+    <ScrollToBottom className="h-[80vh] w-full">
       {messages?.map((message) =>
         message?.author === authUser?.email ? (
           <SenderChatBubble message={message} />

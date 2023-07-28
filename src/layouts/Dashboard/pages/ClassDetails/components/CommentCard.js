@@ -22,7 +22,13 @@ const CommentCard = ({ comment }) => {
       </div>
       <div className="flex flex-col space-y-4">
         <div className="text-start">
-          <h2 className="font-semibold">{dbUser?.userName}</h2>
+          <h2
+            className={`font-semibold ${
+              authUser?.email === author ? "text-end" : "text-start"
+            }`}
+          >
+            {dbUser?.userName}
+          </h2>
           <span className="text-sm text-gray-400 break-all">{content}</span>
         </div>
       </div>
