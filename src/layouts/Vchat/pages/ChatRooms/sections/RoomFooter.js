@@ -88,13 +88,3 @@ const RoomFooter = ({
 };
 
 export default RoomFooter;
-// <Document
-//   file={pdfUrl}
-//   // data={pdfData}
-//   onLoadSuccess={onDocumentLoadSuccess}
-//   options={{ workerSrc: "/pdf.worker.js" }}
-// >
-//   {Array.from(new Array(numPages), (el, index) => (
-//     <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-//   ))}
-// </Document>
