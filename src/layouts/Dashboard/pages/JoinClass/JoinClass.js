@@ -13,7 +13,7 @@ import useGetClasses from "../../../../hooks/useGetClasses";
 import useGetRooms from "../../../../hooks/useGetRooms";
 
 const JoinClass = () => {
-  const { authUser } = useContext(AuthContext);
+  const { authUser, logOut } = useContext(AuthContext);
 
   const { dbUser } = useGetDBUser(authUser?.email);
   const [classId, setClassId] = useState("");
@@ -88,7 +88,14 @@ const JoinClass = () => {
                 <p className="ml-2">{dbUser?.email}</p>
               </div>
             </div>
-            <BasicIconButton className={"mt-2 lg:mt-0"}>
+            <BasicIconButton
+              onClick={() => {
+                logOut()
+                  .then(() => {})
+                  .catch((err) => console.error(err));
+              }}
+              className={"mt-2 lg:mt-0"}
+            >
               <LogOutIcon className={"w-6 h-6"} />
               Log Out
             </BasicIconButton>

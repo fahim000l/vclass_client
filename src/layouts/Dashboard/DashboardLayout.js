@@ -14,9 +14,11 @@ import SquarePlusIcon from "../../tools/icons/SquarePlusIcon";
 import BasicIconOutlineButton from "../../tools/buttons/BasicIconOutlineButton";
 import PlusIcon from "../../tools/icons/PlusIcon";
 import LandMarkIcon from "../../tools/icons/LandMarkIcon";
+import useGetDBUser from "../../hooks/useGetDBUser";
 
 const DashboardLayout = () => {
-  const { logOut } = useContext(AuthContext);
+  const { logOut, authUser } = useContext(AuthContext);
+  const { dbUser } = useGetDBUser(authUser?.email);
 
   const drawerToggleRef = useRef();
 
@@ -38,6 +40,15 @@ const DashboardLayout = () => {
           <label htmlFor="dashboardDrawer" className="drawer-overlay"></label>
           <div className="p-4 w-auto h-full bg-base-200 text-base-content overflow-y-scroll">
             {/* Sidebar content here */}
+            <div>
+              <div className="avatar">
+                <div className="w-24 rounded-full">
+                  <img src={dbUser?.profilePic} alt="" />
+                </div>
+              </div>
+              <p className="font-bold">{dbUser?.userName}</p>
+            </div>
+            <div className="divider"></div>
             <NavLink
               onClick={() => drawerToggleRef.current.click()}
               to={"/dashboard"}
@@ -111,17 +122,17 @@ const DashboardLayout = () => {
               </BasicIconOutlineButton>
             </NavLink>
             <div className="divider"></div>
-            <BasicIconOutlineButton
+            <button
               onClick={() => {
                 logOut()
                   .then(() => {})
                   .catch((err) => console.error(err));
               }}
-              className={"w-full my-2"}
+              className="btn btn-neutral normal-case w-full my-2"
             >
               <LogOutIcon />
               Log Out
-            </BasicIconOutlineButton>
+            </button>
           </div>
         </div>
       </div>

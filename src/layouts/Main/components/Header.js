@@ -16,9 +16,12 @@ import DashboardIcon from "../../../tools/icons/DashboardIcon";
 import LogInIcon from "../../../tools/icons/LogInIcon";
 import profileImage from "../../../../src/assets/auth/blank-profile-picture-973460_1280.webp";
 import IconCoverLabel from "../../../tools/labels/IconCoverLabel";
+import useGetDBUser from "../../../hooks/useGetDBUser";
 
 const Header = ({ navItems }) => {
   const { authUser, logOut } = useContext(AuthContext);
+
+  const { dbUser } = useGetDBUser(authUser?.email);
 
   return (
     <div className="navbar bg-base-100">
@@ -34,16 +37,16 @@ const Header = ({ navItems }) => {
       </div>
       <div className="navbar-end">
         {authUser ? (
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end hidden lg:block">
             <label tabIndex={0}>
               <BasicIconButton>
                 <div class="avatar">
                   <div class="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src={authUser?.protoURL || profileImage} alt="" />
+                    <img src={dbUser?.profilePic || profileImage} alt="" />
                   </div>
                 </div>
                 {/* <ProfileAvatar src={`${authUser?.protoURL}`} /> */}
-                {authUser?.displayName}
+                {dbUser?.userName}
               </BasicIconButton>
             </label>
             <ul

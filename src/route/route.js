@@ -21,6 +21,7 @@ import AssignmentDetails from "../layouts/Dashboard/pages/ClassDetails/Assignmen
 import AnnouncementDetails from "../layouts/Dashboard/pages/ClassDetails/AnnouncementDetails/AnnouncementDetails";
 import SubmissionDetails from "../layouts/Dashboard/pages/ClassDetails/SubmissionDetails/SubmissionDetails";
 import JoinClass from "../layouts/Dashboard/pages/JoinClass/JoinClass";
+import PageNotFound from "../404/404";
 
 const router = createBrowserRouter([
   {
@@ -142,6 +143,10 @@ const router = createBrowserRouter([
         element: <ChatRooms></ChatRooms>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <PageNotFound></PageNotFound>,
   },
 ]);
 
