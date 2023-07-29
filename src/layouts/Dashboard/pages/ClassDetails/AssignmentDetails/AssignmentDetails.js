@@ -141,7 +141,7 @@ const AssignmentDetails = () => {
                 <DocumentIcon className={"w-10 h-10"} />
               </IconCoverButton>
               <div className="mx-2">
-                <h3 className="lg:text-5xl text-3xl font-bold">
+                <h3 className="lg:text-5xl text-3xl font-bold text-start">
                   {asnment?.title}
                 </h3>
                 <p className="text-start">
@@ -221,7 +221,7 @@ const AssignmentDetails = () => {
                 {fileContent && (
                   <div className="btn btn-primary flex justify-between lg:w-[50%] my-1">
                     <a
-                      className="flex justify-between items-center"
+                      className="flex justify-between items-center text-start"
                       href={fileContent?.link}
                       rel="noreferrer"
                       target="_blank"
@@ -231,26 +231,30 @@ const AssignmentDetails = () => {
                         src={fileContent?.icon}
                         alt=""
                       />
-                      {fileContent?.name}
+                      {fileContent?.name.length > 10
+                        ? fileContent?.name?.slice(0, 10) + "..."
+                        : fileContent?.name}
+                      <IconOutlineCoverButton
+                        onClick={() => {
+                          setFileContent(
+                            fileContent?.filter?.(
+                              (deletingFile) => deletingFile !== fileContent
+                            )
+                          );
+                        }}
+                      >
+                        <CrossIcon className={"w-4 h-4"} />
+                      </IconOutlineCoverButton>
                     </a>
-                    <IconOutlineCoverButton
-                      onClick={() => {
-                        setFileContent(
-                          fileContent?.filter?.(
-                            (deletingFile) => deletingFile !== fileContent
-                          )
-                        );
-                      }}
-                    >
-                      <CrossIcon className={"w-4 h-4"} />
-                    </IconOutlineCoverButton>
                   </div>
                 )}
                 {fileContent ? (
                   <BasicButton onClick={handleSubmit} className={"mt-4 w-full"}>
                     Submit
                   </BasicButton>
-                ) : (
+                ) : !asSubs?.find(
+                    (sub) => sub?.submittedBy === authUser?.email
+                  ) ? (
                   <DropboxChooser
                     appKey={`${process.env.REACT_APP_dropbox_secret}`}
                     success={handleChange}
@@ -261,6 +265,10 @@ const AssignmentDetails = () => {
                       Add Submission
                     </BasicIconOutlineButton>
                   </DropboxChooser>
+                ) : (
+                  <p className="badge badge-success badge-lg text-white">
+                    Your assignment is submitted
+                  </p>
                 )}
               </div>
               {/* nceinceicn={dinwidwndiw}n */}
@@ -275,7 +283,7 @@ const AssignmentDetails = () => {
           )}
         </div>
       ) : (
-        <div className="mt-5 lg:px-20">
+        <div className="mt-5 lg:px-20 px-2">
           {asSubs?.map((sub) => (
             <SubmissionCard
               id={id}

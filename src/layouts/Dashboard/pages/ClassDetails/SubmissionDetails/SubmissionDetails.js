@@ -90,7 +90,7 @@ const SubmissionDetails = () => {
 
   return (
     <div className="lg:px-5 px-2 my-5">
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col lg:flex-row items-start justify-between">
         <div className="flex items-start">
           <div className="avatar">
             <div className="lg:w-16 w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -109,7 +109,7 @@ const SubmissionDetails = () => {
         </div>
         <div>
           {authUser?.email === cls?.classTeacher ? (
-            <div className="flex items-end">
+            <div className="flex lg:flex-row flex-col items-start lg:items-end">
               <div className="flex flex-col justify-start">
                 <label htmlFor="" className="text-start">
                   Remark
@@ -125,7 +125,7 @@ const SubmissionDetails = () => {
               <BasicButton
                 disabled={!remarkField}
                 onClick={handleReturn}
-                className={"ml-2"}
+                className={"lg:ml-2 mt-2"}
               >
                 Return
               </BasicButton>
@@ -141,7 +141,7 @@ const SubmissionDetails = () => {
       <div>
         <p className="card-title">{subInfo?.title}</p>
         <div className="grid grid-cols-2 gap-5">
-          <div className="btn btn-primary flex justify-between my-1">
+          <div className="btn btn-primary flex justify-between my-1 text-start">
             <a
               className="flex justify-between items-center"
               href={subInfo?.submittedFile?.link}
@@ -153,7 +153,9 @@ const SubmissionDetails = () => {
                 src={subInfo?.submittedFile?.icon}
                 alt=""
               />
-              {subInfo?.submittedFile?.name}
+              {subInfo?.submittedFile?.name?.length > 10
+                ? subInfo?.submittedFile?.name?.slice(0, 10) + "..."
+                : subInfo?.submittedFile?.name}
             </a>
           </div>
         </div>
