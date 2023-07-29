@@ -20,7 +20,7 @@ const Profile = () => {
   const { classes } = useGetClasses(authUser?.email);
 
   return (
-    <div className="lg:px-10 px-2">
+    <div className="lg:px-10 px-2 py-10">
       <h1 className="text-center w-full font-bold text-xl lg:text-3xl">
         Welcome {dbUser?.userName} To PluggedIn
       </h1>

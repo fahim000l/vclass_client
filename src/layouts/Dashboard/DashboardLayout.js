@@ -90,6 +90,7 @@ const DashboardLayout = () => {
               </BasicIconOutlineButton>
             </NavLink>
             <NavLink
+              to={"/dashboard/join-class"}
               onClick={() => drawerToggleRef.current.click()}
               className="my-2"
             >

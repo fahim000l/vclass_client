@@ -20,6 +20,7 @@ import Members from "../layouts/Dashboard/pages/ClassDetails/sections/Members/Me
 import AssignmentDetails from "../layouts/Dashboard/pages/ClassDetails/AssignmentDetails/AssignmentDetails";
 import AnnouncementDetails from "../layouts/Dashboard/pages/ClassDetails/AnnouncementDetails/AnnouncementDetails";
 import SubmissionDetails from "../layouts/Dashboard/pages/ClassDetails/SubmissionDetails/SubmissionDetails";
+import JoinClass from "../layouts/Dashboard/pages/JoinClass/JoinClass";
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/my-classes",
         element: <MyClasses></MyClasses>,
+      },
+      {
+        path: "/dashboard/join-class",
+        element: <JoinClass></JoinClass>,
       },
       {
         path: "/dashboard/class-details/:id",

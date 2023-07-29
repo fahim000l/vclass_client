@@ -62,7 +62,7 @@ const AddMemberModal = ({ clsId }) => {
       members: selectedUsers,
     };
 
-    fetch(`${process.env.REACT_APP_serverSiteLink}add-class-member`, {
+    fetch(`${process.env.REACT_APP_serverSiteLink}join-class-room`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -74,7 +74,7 @@ const AddMemberModal = ({ clsId }) => {
         console.log(data);
         if (data?.acknowledged) {
           const roomMembersInfo = {
-            roomId: classRoom?._id,
+            classId: clsId,
             members: selectedUsers,
           };
           fetch(`${process.env.REACT_APP_serverSiteLink}add-room-mate`, {
