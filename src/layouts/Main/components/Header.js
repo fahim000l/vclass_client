@@ -17,6 +17,7 @@ import LogInIcon from "../../../tools/icons/LogInIcon";
 import profileImage from "../../../../src/assets/auth/blank-profile-picture-973460_1280.webp";
 import IconCoverLabel from "../../../tools/labels/IconCoverLabel";
 import useGetDBUser from "../../../hooks/useGetDBUser";
+import logo from "../../../assets/home_images/home_page_logo.png";
 
 const Header = ({ navItems }) => {
   const { authUser, logOut } = useContext(AuthContext);
@@ -27,10 +28,15 @@ const Header = ({ navItems }) => {
     <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown"></div>
-        <IconCoverLabel htmlFor={"mainDrawer"} className={"lg:hidden"}>
+        <IconCoverLabel htmlFor={"mainDrawer"} className={"lg:hidden mr-10"}>
           <MenuIcon />
         </IconCoverLabel>
-        <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+        {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
+        <img
+          className="lg:h-[60px] h-[50px] mx-auto lg:mr-auto"
+          src={logo}
+          alt=""
+        />
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>

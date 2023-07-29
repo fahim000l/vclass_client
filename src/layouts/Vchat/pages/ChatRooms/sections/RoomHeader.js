@@ -50,9 +50,9 @@ const RoomHeader = ({ room }) => {
           : dbUser?.userName}
       </h3>
       <div className="flex">
-        <label htmlFor="roomModal" className="mx-1 cursor-pointer">
+        {/* <label htmlFor="roomModal" className="mx-1 cursor-pointer">
           <PhoneIcon className={"w-6 h-6"} />
-        </label>
+        </label> */}
         <label className="mx-1 cursor-pointer" htmlFor="RoomInfoDrawer">
           <IIcon className={"w-6 h-6"} />
         </label>

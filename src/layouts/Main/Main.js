@@ -26,19 +26,19 @@ const Main = () => {
 
   const navItems = (
     <>
-      <NavLink className={"lg:mx-5 lg:my-0 my-2"}>
+      <NavLink className={"lg:mx-5 lg:my-0"}>
         <IconButton className={"w-full lg:w-auto my-2 lg:my-0"}>
           <HomeIcon />
           Home
         </IconButton>
       </NavLink>
-      <NavLink className={"lg:mx-5 lg:my-0 my-2"}>
+      <NavLink className={"lg:mx-5 lg:my-0"}>
         <IconButton className={"w-full lg:w-auto my-2 lg:my-0"}>
           <MailIcon />
           Contact Us
         </IconButton>
       </NavLink>
-      <NavLink className={"lg:mx-5 lg:my-0 my-2"}>
+      <NavLink className={"lg:mx-5 lg:my-0"}>
         <IconButton className={"w-full lg:w-auto my-2 lg:my-0"}>
           <DocumentIcon />
           Documentation
