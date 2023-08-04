@@ -9,9 +9,13 @@ const TextField = ({
   name,
   onChange,
   onKeyDown,
+  defaultValue,
+  onBlur,
 }) => {
   return (
     <input
+      onBlur={onBlur}
+      defaultValue={defaultValue}
       onChange={onChange}
       onKeyDown={onKeyDown}
       type={type}
@@ -19,7 +23,7 @@ const TextField = ({
       value={value}
       name={name}
       required={required}
-      className={`input input-bordered bg-blue-200 border-2 font-bold border-[steelblue]   ${className}`}
+      className={`input input-bordered bg-green-200 border-2 font-bold border-[green]   ${className}`}
     />
   );
 };
