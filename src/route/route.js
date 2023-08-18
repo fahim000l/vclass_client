@@ -26,6 +26,7 @@ import ContactUs from "../layouts/Main/pages/ContactUs/ContactUs";
 import Doc from "../layouts/Main/pages/Doc/Doc";
 import MakeRecordings from "../layouts/Dashboard/pages/ClassDetails/sections/MakeRecordings/MakeRecordings";
 import ClassRecords from "../layouts/Dashboard/pages/ClassDetails/sections/ClassRecords/ClassRecords";
+import MediaDetails from "../layouts/Dashboard/pages/ClassDetails/MediaDetails/MediaDetails";
 
 const router = createBrowserRouter([
   {
@@ -129,6 +130,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/class-details/:id/class-records",
             element: <ClassRecords></ClassRecords>,
+          },
+          {
+            path: "/dashboard/class-details/:id/class-records/:recordId",
+            element: <MediaDetails></MediaDetails>,
           },
           {
             path: "/dashboard/class-details/:id/members",

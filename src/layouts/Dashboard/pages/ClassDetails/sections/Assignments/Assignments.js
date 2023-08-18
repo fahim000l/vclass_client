@@ -105,8 +105,12 @@ const Assignments = () => {
   const handleDeletConfirm = (assignment) => {
     confirmAlert({
       title: `Confirm to delete assignment ,title : ${assignment?.title}`,
-      message:
-        "Are you sure to delete this assignment ? This action can't be undo",
+      message: (
+        <div className="bg-warning p-2 rounded-lg text-red-600 font-bold">
+          <p>Are you sure to delete this assignment ? </p>
+          <p>This action can't be undo</p>
+        </div>
+      ),
       buttons: [
         {
           label: "Yes",
@@ -121,7 +125,7 @@ const Assignments = () => {
               .then((data) => {
                 console.log(data);
                 if (data?.deletedCount > 0) {
-                  toast.success("Assignment deleted successfully");
+                  toast.info("Assignment deleted successfully");
                   assignmentsRefetch();
                 }
               });
