@@ -24,6 +24,8 @@ import JoinClass from "../layouts/Dashboard/pages/JoinClass/JoinClass";
 import PageNotFound from "../404/404";
 import ContactUs from "../layouts/Main/pages/ContactUs/ContactUs";
 import Doc from "../layouts/Main/pages/Doc/Doc";
+import MakeRecordings from "../layouts/Dashboard/pages/ClassDetails/sections/MakeRecordings/MakeRecordings";
+import ClassRecords from "../layouts/Dashboard/pages/ClassDetails/sections/ClassRecords/ClassRecords";
 
 const router = createBrowserRouter([
   {
@@ -35,12 +37,12 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: '/contact-us',
-        element: <ContactUs></ContactUs>
+        path: "/contact-us",
+        element: <ContactUs></ContactUs>,
       },
       {
-        path: '/doc',
-        element: <Doc></Doc>
+        path: "/doc",
+        element: <Doc></Doc>,
       },
       {
         path: "/signin",
@@ -119,6 +121,14 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/class-details/:id/assignments",
             element: <Assignments></Assignments>,
+          },
+          {
+            path: "/dashboard/class-details/:id/make-recording",
+            element: <MakeRecordings></MakeRecordings>,
+          },
+          {
+            path: "/dashboard/class-details/:id/class-records",
+            element: <ClassRecords></ClassRecords>,
           },
           {
             path: "/dashboard/class-details/:id/members",

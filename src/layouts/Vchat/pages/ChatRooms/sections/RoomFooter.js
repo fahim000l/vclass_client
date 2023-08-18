@@ -5,7 +5,6 @@ import TextField from "../../../../../tools/inputs/TextField";
 import AttachIcon from "../../../../../tools/icons/AttachIcon";
 import SentiEmojiIcon from "../../../../../tools/icons/SentiEmojiIcon";
 import PlusIcon from "../../../../../tools/icons/PlusIcon";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import DropboxChooser from "react-dropbox-chooser";
 // h-max
 

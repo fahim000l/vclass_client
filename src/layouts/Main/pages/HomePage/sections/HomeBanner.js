@@ -1,5 +1,5 @@
 import React from "react";
-import bannerImg from "../../../../../assets/home_images/19245711_6101073-scaled.jpg";
+import bannerImg from "../../../../../assets/home_images/footer.png";
 import HomeStat from "./HomeStat";
 
 const HomeBanner = () => {

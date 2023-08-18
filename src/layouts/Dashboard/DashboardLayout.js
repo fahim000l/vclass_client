@@ -24,7 +24,6 @@ const DashboardLayout = () => {
 
   return (
     <div>
-      <DashboardHeader />
       <div className="drawer lg:drawer-open">
         <input
           ref={drawerToggleRef}
@@ -34,9 +33,10 @@ const DashboardLayout = () => {
         />
         <div className="drawer-content">
           {/* Page content here */}
+          <DashboardHeader />
           <Outlet></Outlet>
         </div>
-        <div className="drawer-side">
+        <div className="drawer-side z-[100]">
           <label htmlFor="dashboardDrawer" className="drawer-overlay"></label>
           <div className="p-4 w-auto h-full bg-base-200 text-base-content overflow-y-scroll">
             {/* Sidebar content here */}
