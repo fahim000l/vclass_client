@@ -10,6 +10,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import "./confirmclass.css";
 import { useNavigate } from "react-router-dom";
+import audioDisplay from "../../../../../../../assets/audio.png";
 
 const MediaCard = ({ media, mediasRefetch, setSharingRecord }) => {
   const { author, classId, date, mediaTitle, mediaType, mediaUrl, _id } = media;
@@ -79,13 +80,17 @@ const MediaCard = ({ media, mediasRefetch, setSharingRecord }) => {
       }  bg-base-100 shadow-xl cursor-pointer`}
     >
       <figure className={`${!setSharingRecord && "w-[50%]"}`}>
-        <video
-          muted
-          title={mediaTitle}
-          src={mediaUrl}
-          download={mediaTitle}
-          className="w-full h-[100%]"
-        ></video>
+        {mediaType === "audio" ? (
+          <img src={audioDisplay} alt="" />
+        ) : (
+          <video
+            muted
+            title={mediaTitle}
+            src={mediaUrl}
+            download={mediaTitle}
+            className="w-full h-[100%]"
+          ></video>
+        )}
       </figure>
       <div className={`${setSharingRecord && "card-body"}`}>
         <div className="flex items-start">

@@ -26,7 +26,7 @@ const VideoPreview = ({ stream }) => {
   return <video className="rounded-xl" ref={videoRef} autoPlay controls />;
 };
 
-const ScreenRecordingModal = () => {
+const ScreenRecordingModal = ({ selectedMode }) => {
   const [mediaTitle, setMediaTitle] = useState(`${new Date().getTime()}`);
   const [mediaDetails, setMediaDetails] = useState("");
   const { authUser } = useContext(AuthContext);
@@ -43,7 +43,9 @@ const ScreenRecordingModal = () => {
     clearBlobUrl,
     previewStream,
   } = useReactMediaRecorder({
-    screen: true,
+    screen: selectedMode === "screen" ? true : false,
+    video: selectedMode === "video" ? true : false,
+    audio: selectedMode === "audio" ? true : false,
     blobPropertyBag: {
       type: "video/mp4",
     },
@@ -65,7 +67,7 @@ const ScreenRecordingModal = () => {
         new Date().getMonth() + 1
       }-${new Date().getYear()}`,
       author: authUser?.email,
-      mediaType: "video",
+      mediaType: selectedMode,
       mediaTitle,
       mediaDetails,
       classId: id,
@@ -115,7 +117,15 @@ const ScreenRecordingModal = () => {
                     </span>
                   </p>
                   {status === "recording" || mediaBlobUrl ? (
-                    enable ? (
+                    selectedMode === "audio" ? (
+                      <audio
+                        className="rounded-xl w-full"
+                        src={mediaBlobUrl}
+                        controls
+                        autoPlay
+                        loop
+                      />
+                    ) : enable ? (
                       <VideoPreview stream={previewStream} />
                     ) : (
                       <video

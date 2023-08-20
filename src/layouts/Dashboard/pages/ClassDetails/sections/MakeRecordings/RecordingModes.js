@@ -1,6 +1,6 @@
 import React from "react";
 
-const RecordingModes = () => {
+const RecordingModes = ({ setSelectedMode }) => {
   return (
     <div>
       <h1 className="section-gap text-xl lg:text-3xl mb-5 font-bold">
@@ -26,7 +26,11 @@ const RecordingModes = () => {
               </svg>
             </figure>
             <h2 className="mb-2">Screen Record</h2>
-            <label htmlFor="screenModal" className="cursor-pointer">
+            <label
+              onClick={() => setSelectedMode("screen")}
+              htmlFor="screenModal"
+              className="cursor-pointer"
+            >
               <label
                 className="btn btn-circle transition ease-in-out delay-150 bg-green-500 hover:-translate-y-1 hover:scale-110 hover:bg-[green] duration-300 text-white border-0"
                 htmlFor="screenRecordingModal"
@@ -67,10 +71,14 @@ const RecordingModes = () => {
               </svg>
             </figure>
             <h2 className="mb-2">Webcam Record</h2>
-            <label htmlFor="videoModal" className="cursor-pointer">
+            <label
+              onClick={() => setSelectedMode("video")}
+              htmlFor="screenModal"
+              className="cursor-pointer"
+            >
               <label
                 className="btn btn-circle transition ease-in-out delay-150 bg-green-500 hover:-translate-y-1 hover:scale-110 hover:bg-[green] duration-300 text-white border-0"
-                htmlFor="videoRecordingModal"
+                htmlFor="screenRecordingModal"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -109,10 +117,14 @@ const RecordingModes = () => {
               </svg>
             </figure>
             <h2 className="mb-2">Audio Record</h2>
-            <label htmlFor="audioModal" className="cursor-pointer">
+            <label
+              onClick={() => setSelectedMode("audio")}
+              htmlFor="screenModal"
+              className="cursor-pointer"
+            >
               <label
                 className="btn btn-circle transition ease-in-out delay-150 bg-green-500 hover:-translate-y-1 hover:scale-110 hover:bg-[green] duration-300 text-white border-0"
-                htmlFor="audioRecordingModal"
+                htmlFor="screenRecordingModal"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

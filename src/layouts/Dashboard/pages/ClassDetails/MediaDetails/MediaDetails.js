@@ -16,6 +16,9 @@ import ShareModal from "../sections/ClassRecords/sections/ShareModal";
 import ClassRecords from "../sections/ClassRecords/ClassRecords";
 import useGetClassRecords from "../../../../../hooks/useGetClassRecords";
 import MediaCard from "../sections/ClassRecords/sections/MediaCard";
+import TrushIcon from "../../../../../tools/icons/TrushIcon";
+import EditIcon from "../../../../../tools/icons/EditIcon";
+import audioDisplay from "../../../../../assets/audio.png";
 
 const MediaDetails = () => {
   const { recordId, id } = useParams();
@@ -26,16 +29,7 @@ const MediaDetails = () => {
   const { comments, commentsRefetch } = useGetComments(recordId);
   const { medias } = useGetClassRecords(id);
   const hiddenShareLabel = useRef();
-
-  //   const {
-  //     author = "",
-  //     classId = "",
-  //     date = "",
-  //     mediaTitle = "",
-  //     mediaType = "",
-  //     mediaUrl = "",
-  //     _id = "",
-  //   } = mediaDetails;
+  const hiddenAnchor = useRef();
 
   const { dbUser } = useGetDBUser(mediaDetails?.author);
 
@@ -67,88 +61,134 @@ const MediaDetails = () => {
   };
 
   return (
-    <div className="lg:flex">
-      <div className="lg:w-[60%] lg:p-5 p-2">
-        <div className="card bg-base-100 shadow-xl">
-          <figure>
-            <video controls autoPlay src={mediaDetails?.mediaUrl}></video>
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">{mediaDetails?.mediaTitle}</h2>
-            <div className="flex items-start">
-              <div className="avatar">
-                <div className="w-10 rounded-full">
-                  <img src={dbUser?.profilePic} alt="" />
+    <div className="w-full">
+      <div className="flex flex-col lg:flex-row">
+        <div className="lg:w-[60%] w-full lg:p-5 p-2">
+          <div className="card bg-base-100 shadow-xl">
+            <figure className="w-full">
+              {mediaDetails?.mediaType === "audio" ? (
+                <div className="w-full">
+                  <img className="mx-auto" src={audioDisplay} alt="" />
+                  <audio
+                    className="w-full"
+                    autoPlay
+                    controls
+                    src={mediaDetails?.mediaUrl}
+                  ></audio>
                 </div>
-              </div>
-              <div className="lg:flex justify-between w-full">
-                <div className="ml-2 text-start">
-                  <p className="opacity-75 font-bold">{dbUser?.userName}</p>
-                  <p className="opacity-75 font-bold">{mediaDetails?.date}</p>
-                </div>
-                <div className="flex">
-                  <label
-                    ref={hiddenShareLabel}
-                    htmlFor="shareModal"
-                    className="hidden"
-                  ></label>
-                  <BasicIconButton
-                    onClick={() => hiddenShareLabel.current.click()}
-                    className={"mr-2 btn-sm w-36"}
-                  >
-                    <ShareIcon />
-                    Share
-                  </BasicIconButton>
-                  <BasicIconButton className={"btn-sm w-36"}>
-                    <DownloadIcon />
-                    Download
-                  </BasicIconButton>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col w-full">
-              <div className="grid h-auto card bg-base-300 rounded-box text-start p-2">
-                {mediaDetails?.mediaDetails}
-              </div>
-              <div className="divider"></div>
-              <div className="grid h-auto card bg-base-300 rounded-box">
-                <ScrollToBottom className="h-[40vh]">
-                  {comments?.map((comment) => (
-                    <CommentCard comment={comment} key={comment?._id} />
-                  ))}
-                </ScrollToBottom>
-              </div>
-              <div className="flex items-center justify-between border-t gap-3 mt-2 pt-2">
+              ) : (
+                <video
+                  controls
+                  autoPlay
+                  className="w-full"
+                  src={mediaDetails?.mediaUrl}
+                ></video>
+              )}
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">{mediaDetails?.mediaTitle}</h2>
+              <div className="flex items-start">
                 <div className="avatar">
                   <div className="w-10 rounded-full">
-                    <img src={authUser?.photoURL} alt="" />
+                    <img src={dbUser?.profilePic} alt="" />
                   </div>
                 </div>
-                <TextField
-                  onChange={(event) => setCommentText(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      sendComment();
-                    }
-                  }}
-                  value={commentText}
-                  placeholder={"Aa"}
-                  className={"w-full input-sm"}
-                />
-                <div className="flex">
-                  <button onClick={sendComment}>
-                    <SendIcon className={"cursor-pointer w-6 h-6 mx-2"} />
-                  </button>
+                <div className="w-full">
+                  <div className="ml-2 text-start">
+                    <p className="opacity-75 font-bold">{dbUser?.userName}</p>
+                    <p className="opacity-75 font-bold">{mediaDetails?.date}</p>
+                  </div>
+                  <div className="flex mt-2">
+                    <label
+                      ref={hiddenShareLabel}
+                      htmlFor="shareModal"
+                      className="hidden"
+                    ></label>
+                    <a
+                      ref={hiddenAnchor}
+                      className="hidden"
+                      href={mediaDetails?.mediaUrl}
+                      download={mediaDetails?.mediaTitle}
+                    >
+                      Download
+                    </a>
+                    <BasicIconButton
+                      onClick={() => hiddenShareLabel.current.click()}
+                      className={"mr-2 btn-sm"}
+                    >
+                      <ShareIcon />
+                      Share
+                    </BasicIconButton>
+                    <BasicIconButton
+                      onClick={() => hiddenAnchor.current.click()}
+                      className={"btn-sm mr-2"}
+                    >
+                      <DownloadIcon />
+                      Download
+                    </BasicIconButton>
+                    <BasicIconButton
+                      onClick={() => hiddenAnchor.current.click()}
+                      className={"btn-sm mr-2"}
+                    >
+                      <TrushIcon className={"h-6 w-6"} />
+                      Delete
+                    </BasicIconButton>
+                    <BasicIconButton
+                      onClick={() => hiddenAnchor.current.click()}
+                      className={"btn-sm"}
+                    >
+                      <EditIcon className={"h-6 w-6"} />
+                      Edit
+                    </BasicIconButton>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col w-full">
+                {mediaDetails?.mediaDetails && (
+                  <div className="h-auto bg-base-300 rounded-box text-start p-2">
+                    {mediaDetails?.mediaDetails}
+                  </div>
+                )}
+                <div className="divider"></div>
+                <div className="h-auto bg-base-300 rounded-box">
+                  <ScrollToBottom className="h-[40vh]">
+                    {comments?.map((comment) => (
+                      <CommentCard comment={comment} key={comment?._id} />
+                    ))}
+                  </ScrollToBottom>
+                </div>
+                <div className="flex items-center justify-between border-t gap-3 mt-2 pt-2">
+                  <div className="avatar">
+                    <div className="w-10 rounded-full">
+                      <img src={authUser?.photoURL} alt="" />
+                    </div>
+                  </div>
+                  <TextField
+                    onChange={(event) => setCommentText(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        sendComment();
+                      }
+                    }}
+                    value={commentText}
+                    placeholder={"Aa"}
+                    className={"w-full input-sm"}
+                  />
+                  <div className="flex">
+                    <button onClick={sendComment}>
+                      <SendIcon className={"cursor-pointer w-6 h-6 mx-2"} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="lg:w-[40%] grid grid-cols-1 gap-5 lg:p-5 p-2">
-        {medias?.map((media) => (
-          <MediaCard media={media} />
-        ))}
+        <div className="lg:w-[40%] w-full grid grid-cols-1 gap-5 lg:p-5 p-2">
+          {medias?.map((media) => (
+            <MediaCard media={media} />
+          ))}
+        </div>
       </div>
       {mediaDetails && <ShareModal sharingRecod={mediaDetails} />}
     </div>
