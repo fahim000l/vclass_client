@@ -74,73 +74,82 @@ const MediaCard = ({ media, mediasRefetch, setSharingRecord }) => {
   return (
     <div
       onClick={handleMainDivClick}
-      className="card card-compact bg-base-100 shadow-xl cursor-pointer"
+      className={`card h-auto ${
+        setSharingRecord ? "card-compact" : "card-side"
+      }  bg-base-100 shadow-xl cursor-pointer`}
     >
-      <figure>
+      <figure className={`${!setSharingRecord && "w-[50%]"}`}>
         <video
           muted
           title={mediaTitle}
           src={mediaUrl}
           download={mediaTitle}
+          className="w-full h-[100%]"
         ></video>
       </figure>
       <div className="card-body">
         <div className="flex items-start">
-          <div className="avatar">
-            <div className="w-10 rounded-full">
-              <img src={dbUser?.profilePic} alt="" />
+          {setSharingRecord && (
+            <div className="avatar">
+              <div className="w-10 rounded-full">
+                <img src={dbUser?.profilePic} alt="" />
+              </div>
             </div>
-          </div>
+          )}
           <div className="ml-2 text-start">
             <h2 className="card-title">{mediaTitle}</h2>
             <p className="opacity-75 font-bold">{dbUser?.userName}</p>
             <p className="opacity-75 font-bold">{date}</p>
           </div>
           <div className="dropdown dropdown-end ml-auto">
-            <label tabIndex={0} className="btn btn-sm btn-circle m-1">
-              <ThreeDotIcon className={"w-6 h-6"} />
-            </label>
-            <a
-              ref={hiddenDownloadRef}
-              download={`${mediaUrl}/fl_attachment/${mediaTitle}.mp4`}
-              className="hidden"
-              href={mediaUrl}
-            >
-              Download
-            </a>
-            <label
-              onClick={() => setSharingRecord(media)}
-              ref={hiddenShareLabel}
-              htmlFor="shareModal"
-              className="hidden"
-            ></label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow rounded-box w-52 bg-green-300"
-            >
-              <li className="mt-2">
-                <BasicIconButton onClick={handleDeletConfirm}>
-                  Delete
-                  <TrushIcon className={"w-6 h-6"} />
-                </BasicIconButton>
-              </li>
-              <li className="mt-2">
-                <BasicIconButton
-                  onClick={() => hiddenDownloadRef.current.click()}
+            {setSharingRecord && (
+              <>
+                <label tabIndex={0} className="btn btn-sm btn-circle m-1">
+                  <ThreeDotIcon className={"w-6 h-6"} />
+                </label>
+                <a
+                  ref={hiddenDownloadRef}
+                  download={`${mediaUrl}/fl_attachment/${mediaTitle}.mp4`}
+                  className="hidden"
+                  href={mediaUrl}
                 >
                   Download
-                  <DownloadIcon />
-                </BasicIconButton>
-              </li>
-              <li className="mt-2">
-                <BasicIconButton
-                  onClick={() => hiddenShareLabel.current.click()}
+                </a>
+                <label
+                  onClick={() => setSharingRecord(media)}
+                  ref={hiddenShareLabel}
+                  htmlFor="shareModal"
+                  className="hidden"
+                ></label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow rounded-box w-52 bg-green-300"
                 >
-                  Share
-                  <ShareIcon />
-                </BasicIconButton>
-              </li>
-            </ul>
+                  <li className="mt-2">
+                    <BasicIconButton onClick={handleDeletConfirm}>
+                      Delete
+                      <TrushIcon className={"w-6 h-6"} />
+                    </BasicIconButton>
+                  </li>
+                  <li className="mt-2">
+                    <BasicIconButton
+                      onClick={() => hiddenDownloadRef.current.click()}
+                    >
+                      Download
+                      <DownloadIcon />
+                    </BasicIconButton>
+                  </li>
+                  <li className="mt-2">
+                    <BasicIconButton
+                      onClick={() => hiddenShareLabel.current.click()}
+                    >
+                      Share
+                      <ShareIcon />
+                    </BasicIconButton>
+                  </li>
+                </ul>
+              </>
+            )}
           </div>
         </div>
       </div>

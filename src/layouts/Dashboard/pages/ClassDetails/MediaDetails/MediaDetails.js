@@ -13,14 +13,18 @@ import { toast } from "react-toastify";
 import CommentCard from "../components/CommentCard";
 import ScrollToBottom from "react-scroll-to-bottom";
 import ShareModal from "../sections/ClassRecords/sections/ShareModal";
+import ClassRecords from "../sections/ClassRecords/ClassRecords";
+import useGetClassRecords from "../../../../../hooks/useGetClassRecords";
+import MediaCard from "../sections/ClassRecords/sections/MediaCard";
 
 const MediaDetails = () => {
-  const { recordId } = useParams();
+  const { recordId, id } = useParams();
   const { authUser } = useContext(AuthContext);
   const [commentText, setCommentText] = useState("");
 
   const { mediaDetails = null } = useGetMedia(recordId);
   const { comments, commentsRefetch } = useGetComments(recordId);
+  const { medias } = useGetClassRecords(id);
   const hiddenShareLabel = useRef();
 
   //   const {
@@ -64,13 +68,12 @@ const MediaDetails = () => {
 
   return (
     <div className="lg:flex">
-      <div className="lg:w-[70%] lg:p-5 p-2">
+      <div className="lg:w-[60%] lg:p-5 p-2">
         <div className="card bg-base-100 shadow-xl">
           <figure>
             <video controls autoPlay src={mediaDetails?.mediaUrl}></video>
           </figure>
           <div className="card-body">
-            <TextField />
             <h2 className="card-title">{mediaDetails?.mediaTitle}</h2>
             <div className="flex items-start">
               <div className="avatar">
@@ -91,12 +94,12 @@ const MediaDetails = () => {
                   ></label>
                   <BasicIconButton
                     onClick={() => hiddenShareLabel.current.click()}
-                    className={"mr-2"}
+                    className={"mr-2 btn-sm w-36"}
                   >
                     <ShareIcon />
                     Share
                   </BasicIconButton>
-                  <BasicIconButton>
+                  <BasicIconButton className={"btn-sm w-36"}>
                     <DownloadIcon />
                     Download
                   </BasicIconButton>
@@ -104,13 +107,23 @@ const MediaDetails = () => {
               </div>
             </div>
             <div className="flex flex-col w-full">
-              <div className="grid h-20 card bg-base-300 rounded-box text-ellipsis overflow-auto text-start p-2">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum
-                obcaecati reprehenderit dicta doloremque eos, eligendi accusamus
-                soluta repudiandae commodi, aperiam rerum corrupti
+              <div className="grid h-auto card bg-base-300 rounded-box text-start p-2">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Recusandae magni doloremque reiciendis necessitatibus quam
+                soluta unde omnis ad eaque non? Distinctio non similique nemo
+                temporibus ratione animi, necessitatibus totam facilis quo
+                tempora, obcaecati dolor atque soluta ipsum illum nesciunt vitae
+                fuga aliquam consequuntur ullam explicabo neque officiis nulla
+                quisquam! Fuga animi, iusto repellendus, excepturi amet
+                perferendis magnam eligendi quia rerum minima odit suscipit quo
+                dolorum veritatis. Ex ipsa libero odio natus quaerat quae qui
+                pariatur provident dolores dolorem, error quo sunt beatae
+                accusantium? Quasi, eos quae. Excepturi velit ratione voluptatem
+                maxime eveniet omnis provident odit asperiores, consequuntur
+                corporis nulla consectetur.
               </div>
               <div className="divider"></div>
-              <div className="grid h-20 card bg-base-300 rounded-box">
+              <div className="grid h-auto card bg-base-300 rounded-box">
                 <ScrollToBottom className="h-[40vh]">
                   {comments?.map((comment) => (
                     <CommentCard comment={comment} key={comment?._id} />
@@ -142,11 +155,12 @@ const MediaDetails = () => {
               </div>
             </div>
           </div>
-          <TextField />
         </div>
       </div>
-      <div className="lg:w-[30%]">
-        <TextField />
+      <div className="lg:w-[40%] grid grid-cols-1 gap-5 lg:p-5 p-2">
+        {medias?.map((media) => (
+          <MediaCard media={media} />
+        ))}
       </div>
       {mediaDetails && <ShareModal sharingRecod={mediaDetails} />}
     </div>
