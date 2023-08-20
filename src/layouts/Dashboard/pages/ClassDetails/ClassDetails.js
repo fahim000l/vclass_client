@@ -165,7 +165,7 @@ const ClassDetails = () => {
         </Link>
         <Link
           to={`/dashboard/class-details/${id}/make-recording`}
-          className={`text-success font-bold ${
+          className={`text-success hidden font-bold ${
             pathname.split("/")[pathname.split("/").length - 1] ===
             "make-recordings"
               ? "active"

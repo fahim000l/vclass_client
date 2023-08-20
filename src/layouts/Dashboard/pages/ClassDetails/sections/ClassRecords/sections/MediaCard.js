@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import useGetDBUser from "../../../../../../../hooks/useGetDBUser";
 import MenuIcon from "../../../../../../../tools/icons/MenuIcon";
 import ThreeDotIcon from "../../../../../../../tools/icons/ThreeDotIcon";
@@ -11,10 +11,12 @@ import { toast } from "react-toastify";
 import "./confirmclass.css";
 import { useNavigate } from "react-router-dom";
 import audioDisplay from "../../../../../../../assets/audio.png";
+import { AuthContext } from "../../../../../../../contexts/AuthProvider";
 
 const MediaCard = ({ media, mediasRefetch, setSharingRecord }) => {
   const { author, classId, date, mediaTitle, mediaType, mediaUrl, _id } = media;
   const { dbUser } = useGetDBUser(author);
+  const { authUser } = useContext(AuthContext);
   const hiddenDownloadRef = useRef();
   const hiddenShareLabel = useRef();
   const navigator = useNavigate();
@@ -130,12 +132,14 @@ const MediaCard = ({ media, mediasRefetch, setSharingRecord }) => {
                   tabIndex={0}
                   className="dropdown-content z-[1] menu p-2 shadow rounded-box w-52 bg-green-300"
                 >
-                  <li className="mt-2">
-                    <BasicIconButton onClick={handleDeletConfirm}>
-                      Delete
-                      <TrushIcon className={"w-6 h-6"} />
-                    </BasicIconButton>
-                  </li>
+                  {authUser?.email === author && (
+                    <li className="mt-2">
+                      <BasicIconButton onClick={handleDeletConfirm}>
+                        Delete
+                        <TrushIcon className={"w-6 h-6"} />
+                      </BasicIconButton>
+                    </li>
+                  )}
                   <li className="mt-2">
                     <BasicIconButton
                       onClick={() => hiddenDownloadRef.current.click()}

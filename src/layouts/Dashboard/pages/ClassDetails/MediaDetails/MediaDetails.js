@@ -19,6 +19,7 @@ import MediaCard from "../sections/ClassRecords/sections/MediaCard";
 import TrushIcon from "../../../../../tools/icons/TrushIcon";
 import EditIcon from "../../../../../tools/icons/EditIcon";
 import audioDisplay from "../../../../../assets/audio.png";
+import IconCoverButton from "../../../../../tools/buttons/IconCoverButton";
 
 const MediaDetails = () => {
   const { recordId, id } = useParams();
@@ -85,7 +86,7 @@ const MediaDetails = () => {
                 ></video>
               )}
             </figure>
-            <div className="card-body">
+            <div className="card-body px-2">
               <h2 className="card-title">{mediaDetails?.mediaTitle}</h2>
               <div className="flex items-start">
                 <div className="avatar">
@@ -112,34 +113,33 @@ const MediaDetails = () => {
                     >
                       Download
                     </a>
-                    <BasicIconButton
+                    <IconCoverButton
                       onClick={() => hiddenShareLabel.current.click()}
-                      className={"mr-2 btn-sm"}
+                      className={"mr-2"}
                     >
                       <ShareIcon />
-                      Share
-                    </BasicIconButton>
-                    <BasicIconButton
+                    </IconCoverButton>
+                    <IconCoverButton
                       onClick={() => hiddenAnchor.current.click()}
-                      className={"btn-sm mr-2"}
+                      className={"mr-2"}
                     >
                       <DownloadIcon />
-                      Download
-                    </BasicIconButton>
-                    <BasicIconButton
-                      onClick={() => hiddenAnchor.current.click()}
-                      className={"btn-sm mr-2"}
-                    >
-                      <TrushIcon className={"h-6 w-6"} />
-                      Delete
-                    </BasicIconButton>
-                    <BasicIconButton
-                      onClick={() => hiddenAnchor.current.click()}
-                      className={"btn-sm"}
-                    >
-                      <EditIcon className={"h-6 w-6"} />
-                      Edit
-                    </BasicIconButton>
+                    </IconCoverButton>
+                    {authUser?.email === mediaDetails?.author && (
+                      <>
+                        <IconCoverButton
+                          onClick={() => hiddenAnchor.current.click()}
+                          className={"mr-2"}
+                        >
+                          <TrushIcon className={"h-6 w-6"} />
+                        </IconCoverButton>
+                        <IconCoverButton
+                          onClick={() => hiddenAnchor.current.click()}
+                        >
+                          <EditIcon className={"h-6 w-6"} />
+                        </IconCoverButton>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
