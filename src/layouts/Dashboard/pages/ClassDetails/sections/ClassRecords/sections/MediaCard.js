@@ -87,7 +87,7 @@ const MediaCard = ({ media, mediasRefetch, setSharingRecord }) => {
           className="w-full h-[100%]"
         ></video>
       </figure>
-      <div className="card-body">
+      <div className={`${setSharingRecord && "card-body"}`}>
         <div className="flex items-start">
           {setSharingRecord && (
             <div className="avatar">

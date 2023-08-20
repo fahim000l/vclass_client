@@ -5,6 +5,12 @@ import { AuthContext } from "../../../../../../contexts/AuthProvider";
 import useSetMediaToDB from "../../../../../../hooks/useSetMediaToDB";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import TextEditor from "../../components/TextEditor";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import Link from "@tiptap/extension-link";
+import TextArea from "../../../../../../tools/inputs/TextArea";
 
 const VideoPreview = ({ stream }) => {
   const videoRef = useRef(null);
@@ -22,6 +28,7 @@ const VideoPreview = ({ stream }) => {
 
 const ScreenRecordingModal = () => {
   const [mediaTitle, setMediaTitle] = useState(`${new Date().getTime()}`);
+  const [mediaDetails, setMediaDetails] = useState("");
   const { authUser } = useContext(AuthContext);
   const [mediaInfo, setMediaInfo] = useState(null);
   const { id } = useParams();
@@ -60,6 +67,7 @@ const ScreenRecordingModal = () => {
       author: authUser?.email,
       mediaType: "video",
       mediaTitle,
+      mediaDetails,
       classId: id,
     };
 
@@ -87,7 +95,7 @@ const ScreenRecordingModal = () => {
             ✕
           </label>
           <div className="mt-5">
-            <div className="stack w-full">
+            <div className="stack w-full mb-5">
               <div className="card shadow-md bg-[green] text-primary-content">
                 <div className="card-body">
                   <p className="font-bold">
@@ -141,6 +149,13 @@ const ScreenRecordingModal = () => {
                 </div>
               </div>
             </div>
+            {status === "stopped" && (
+              <TextArea
+                onChange={(event) => setMediaDetails(event.target.value)}
+                placeholder={"Media Details"}
+                className={"w-full"}
+              />
+            )}
             <div className="flex items-center justify-evenly mt-4">
               {status === "recording" ? (
                 <button

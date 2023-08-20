@@ -108,19 +108,7 @@ const MediaDetails = () => {
             </div>
             <div className="flex flex-col w-full">
               <div className="grid h-auto card bg-base-300 rounded-box text-start p-2">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Recusandae magni doloremque reiciendis necessitatibus quam
-                soluta unde omnis ad eaque non? Distinctio non similique nemo
-                temporibus ratione animi, necessitatibus totam facilis quo
-                tempora, obcaecati dolor atque soluta ipsum illum nesciunt vitae
-                fuga aliquam consequuntur ullam explicabo neque officiis nulla
-                quisquam! Fuga animi, iusto repellendus, excepturi amet
-                perferendis magnam eligendi quia rerum minima odit suscipit quo
-                dolorum veritatis. Ex ipsa libero odio natus quaerat quae qui
-                pariatur provident dolores dolorem, error quo sunt beatae
-                accusantium? Quasi, eos quae. Excepturi velit ratione voluptatem
-                maxime eveniet omnis provident odit asperiores, consequuntur
-                corporis nulla consectetur.
+                {mediaDetails?.mediaDetails}
               </div>
               <div className="divider"></div>
               <div className="grid h-auto card bg-base-300 rounded-box">
