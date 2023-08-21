@@ -43,8 +43,9 @@ const RoomFooter = ({
             </button>
           ) : (
             <div className="flex">
-              <label>
+              <label htmlFor="emojiModal" className="">
                 <SentiEmojiIcon className={"cursor-pointer w-6 h-6 mx-2"} />
+                {/* emoji */}
               </label>
               <DropboxChooser
                 appKey={`${process.env.REACT_APP_dropbox_secret}`}

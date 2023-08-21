@@ -10,6 +10,7 @@ import { AuthContext } from "../../../../contexts/AuthProvider";
 import useGetRooms from "../../../../hooks/useGetRooms";
 import useGetMessages from "../../../../hooks/useGetMessages";
 import useUploadFile from "../../../../hooks/useUploadFile";
+import EmojiModal from "./sections/EmojiModal";
 
 const ChatRooms = () => {
   const { id } = useParams();
@@ -102,6 +103,7 @@ const ChatRooms = () => {
           setFileContent={setFileContent}
           fileContent={fileContent}
         />
+        <EmojiModal msgContent={msgContent} setMsgContent={setMsgContent} />
       </div>
       <RoomComponents room={room} />
     </div>
