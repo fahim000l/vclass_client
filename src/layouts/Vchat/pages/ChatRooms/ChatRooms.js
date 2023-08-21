@@ -63,6 +63,22 @@ const ChatRooms = () => {
     }
   };
 
+  const handleSendLike = () => {
+    const likeInfo = {
+      author: authUser?.email,
+      date: `${new Date().getDate()}-${
+        new Date().getMonth() + 1
+      }-${new Date().getFullYear()}`,
+      time: new Date(Date()).getMinutes() + ":" + new Date(Date()).getSeconds(),
+      messageContent: "👍",
+      room: id,
+    };
+
+    socket.emit("send_message", likeInfo);
+    sendMessageTodb(likeInfo);
+    setMsgContent("");
+  };
+
   const sendMessageTodb = (msgInfo) => {
     fetch(`${process.env.REACT_APP_serverSiteLink}store-message`, {
       method: "PUT",
@@ -101,6 +117,7 @@ const ChatRooms = () => {
           handleSendMsg={handleSendMsg}
           setMsgContent={setMsgContent}
           setFileContent={setFileContent}
+          handleSendLike={handleSendLike}
           fileContent={fileContent}
         />
         <EmojiModal msgContent={msgContent} setMsgContent={setMsgContent} />

@@ -14,6 +14,7 @@ const RoomFooter = ({
   msgContent,
   setFileContent,
   fileContent,
+  handleSendLike,
 }) => {
   const [typing, setTyping] = useState(false);
 
@@ -77,7 +78,7 @@ const RoomFooter = ({
               <SendIcon className={"cursor-pointer w-6 h-6 mx-2"} />
             </button>
           ) : (
-            <button>
+            <button onClick={handleSendLike}>
               <LikeIcon className={"cursor-pointer w-6 h-6 mx-2"} />
             </button>
           )}
