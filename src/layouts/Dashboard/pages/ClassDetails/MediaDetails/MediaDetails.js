@@ -26,8 +26,8 @@ const MediaDetails = () => {
   const { recordId, id } = useParams();
   const { authUser } = useContext(AuthContext);
   const [commentText, setCommentText] = useState("");
-
-  const { mediaDetails = null } = useGetMedia(recordId);
+  const [editingMedia, setEditingMedia] = useState(null);
+  const { mediaDetails = null, mediaDetailsRefetch } = useGetMedia(recordId);
   const { comments, commentsRefetch } = useGetComments(recordId);
   const { medias } = useGetClassRecords(id);
   const hiddenShareLabel = useRef();
@@ -108,6 +108,7 @@ const MediaDetails = () => {
                       className="hidden"
                     ></label>
                     <label
+                      onClick={() => setEditingMedia(mediaDetails)}
                       ref={hiddenEditLabel}
                       htmlFor="editMediaModal"
                     ></label>
@@ -197,7 +198,14 @@ const MediaDetails = () => {
         </div>
       </div>
       {mediaDetails && <ShareModal sharingRecod={mediaDetails} />}
-      <EditMediaModal mediaDetails={mediaDetails} />
+      {editingMedia && (
+        <EditMediaModal
+          classId={id}
+          mediaDetailsRefetch={mediaDetailsRefetch}
+          mediaDetails={editingMedia}
+          setEditingMedia={setEditingMedia}
+        />
+      )}
     </div>
   );
 };
