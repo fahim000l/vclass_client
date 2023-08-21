@@ -20,6 +20,7 @@ import TrushIcon from "../../../../../tools/icons/TrushIcon";
 import EditIcon from "../../../../../tools/icons/EditIcon";
 import audioDisplay from "../../../../../assets/audio.png";
 import IconCoverButton from "../../../../../tools/buttons/IconCoverButton";
+import EditMediaModal from "./components/EditMediaModal";
 
 const MediaDetails = () => {
   const { recordId, id } = useParams();
@@ -30,6 +31,7 @@ const MediaDetails = () => {
   const { comments, commentsRefetch } = useGetComments(recordId);
   const { medias } = useGetClassRecords(id);
   const hiddenShareLabel = useRef();
+  const hiddenEditLabel = useRef();
   const hiddenAnchor = useRef();
 
   const { dbUser } = useGetDBUser(mediaDetails?.author);
@@ -105,6 +107,10 @@ const MediaDetails = () => {
                       htmlFor="shareModal"
                       className="hidden"
                     ></label>
+                    <label
+                      ref={hiddenEditLabel}
+                      htmlFor="editMediaModal"
+                    ></label>
                     <a
                       ref={hiddenAnchor}
                       className="hidden"
@@ -134,7 +140,7 @@ const MediaDetails = () => {
                           <TrushIcon className={"h-6 w-6"} />
                         </IconCoverButton>
                         <IconCoverButton
-                          onClick={() => hiddenAnchor.current.click()}
+                          onClick={() => hiddenEditLabel.current.click()}
                         >
                           <EditIcon className={"h-6 w-6"} />
                         </IconCoverButton>
@@ -191,6 +197,7 @@ const MediaDetails = () => {
         </div>
       </div>
       {mediaDetails && <ShareModal sharingRecod={mediaDetails} />}
+      <EditMediaModal mediaDetails={mediaDetails} />
     </div>
   );
 };

@@ -23,7 +23,7 @@ const VideoPreview = ({ stream }) => {
   if (!stream) {
     return null;
   }
-  return <video className="rounded-xl" ref={videoRef} autoPlay controls />;
+  return <video className="rounded-xl" ref={videoRef} autoPlay />;
 };
 
 const ScreenRecordingModal = ({ selectedMode }) => {
@@ -45,9 +45,8 @@ const ScreenRecordingModal = ({ selectedMode }) => {
   } = useReactMediaRecorder({
     screen: selectedMode === "screen" ? true : false,
     video: selectedMode === "video" ? true : false,
-    audio: selectedMode === "audio" ? true : false,
     blobPropertyBag: {
-      type: "video/mp4",
+      type: selectedMode === "audio" ? "audio/wav" : "video/mp4",
     },
   });
   const { dbConfirmation } = useSetMediaToDB(mediaInfo, mediaBlobUrl);

@@ -5,7 +5,7 @@ const useGetMedia = (mediaId) => {
     refetch: mediaDetailsRefetch,
     isLoading: mediaDetailsLoading,
   } = useQuery({
-    queryKey: [],
+    queryKey: ["get-media", mediaId],
     queryFn: () =>
       fetch(
         `${process.env.REACT_APP_serverSiteLink}get-media?mediaId=${mediaId}`
