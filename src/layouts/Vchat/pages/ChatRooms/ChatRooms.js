@@ -120,7 +120,14 @@ const ChatRooms = () => {
           handleSendLike={handleSendLike}
           fileContent={fileContent}
         />
-        <EmojiModal msgContent={msgContent} setMsgContent={setMsgContent} />
+        <EmojiModal
+          msgContent={msgContent}
+          setMsgContent={setMsgContent}
+          handleSendMsg={handleSendMsg}
+          setFileContent={setFileContent}
+          handleSendLike={handleSendLike}
+          fileContent={fileContent}
+        />
       </div>
       <RoomComponents room={room} />
     </div>
