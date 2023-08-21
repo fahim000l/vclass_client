@@ -24,6 +24,8 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { AuthContext } from "../../../../../../contexts/AuthProvider";
 import AssignmentCard from "../Stream/components/AssignmentCard";
+import Empty from "../../../../../../Empty/Empty";
+import Loader from "../../../../../../Loader/Loader";
 
 const Assignments = () => {
   const { id } = useParams();
@@ -33,7 +35,8 @@ const Assignments = () => {
   const navigator = useNavigate();
   const { authUser } = useContext(AuthContext);
 
-  const { assignments, assignmentsRefetch } = useGetAssignmentsByClass(id);
+  const { assignments, assignmentsRefetch, assignmentsLoading } =
+    useGetAssignmentsByClass(id);
 
   const { cls } = useGetClass(id);
   const { dbUser } = useGetDBUser(cls?.classTeacher);
@@ -247,14 +250,20 @@ const Assignments = () => {
         )}
       </div>
       <div className="mt-5 lg:px-20">
-        {assignments?.map((assignment) => (
-          <AssignmentCard
-            key={assignment?._id}
-            classId={id}
-            assignment={assignment}
-            handleDeletConfirm={handleDeletConfirm}
-          />
-        ))}
+        {assignmentsLoading ? (
+          <Loader />
+        ) : assignments?.length === 0 ? (
+          <Empty message={"Class has no assignments"} />
+        ) : (
+          assignments?.map((assignment) => (
+            <AssignmentCard
+              key={assignment?._id}
+              classId={id}
+              assignment={assignment}
+              handleDeletConfirm={handleDeletConfirm}
+            />
+          ))
+        )}
       </div>
     </div>
   );

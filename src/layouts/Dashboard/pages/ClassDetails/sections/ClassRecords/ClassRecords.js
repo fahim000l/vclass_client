@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import TextField from "../../../../../../tools/inputs/TextField";
 import MediaCard from "./sections/MediaCard";
 import ShareModal from "./sections/ShareModal";
+import Empty from "../../../../../../Empty/Empty";
 
 const ClassRecords = () => {
   const { id } = useParams();
@@ -69,16 +70,20 @@ const ClassRecords = () => {
           Screen
         </button>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5">
-        {requiredMedias?.map((media, i) => (
-          <MediaCard
-            key={i}
-            media={media}
-            mediasRefetch={mediasRefetch}
-            setSharingRecord={setSharingRecord}
-          />
-        ))}
-      </div>
+      {requiredMedias?.length === 0 ? (
+        <Empty message={"No Media available"} />
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5">
+          {requiredMedias?.map((media, i) => (
+            <MediaCard
+              key={i}
+              media={media}
+              mediasRefetch={mediasRefetch}
+              setSharingRecord={setSharingRecord}
+            />
+          ))}
+        </div>
+      )}
       {sharingRecod && <ShareModal sharingRecod={sharingRecod} />}
     </div>
   );
